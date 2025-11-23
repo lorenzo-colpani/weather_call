@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 # Configure the root logger
 logging.basicConfig(
-    level=logging.DEBUG,  # <--- This captures INFO, WARNING, ERROR
+    level=logging.INFO,  # <--- This captures INFO, WARNING, ERROR
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
     handlers=[
         logging.StreamHandler(sys.stdout)  # Prints to terminal
