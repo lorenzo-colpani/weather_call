@@ -1,0 +1,12 @@
+Metadata-Version: 2.4
+Name: weather-call
+Version: 0.1.0
+Summary: Add your description here
+Author-email: Lorenzo Colpani <l.g.colpani@gmail.com>
+Requires-Python: >=3.13
+Description-Content-Type: text/markdown
+Requires-Dist: polars>=1.35.2
+Requires-Dist: pydantic>=2.12.4
+Requires-Dist: pydantic-settings>=2.12.0
+Requires-Dist: requests>=2.32.5
+Requires-Dist: sqlalchemy>=2.0.44

@@ -1,0 +1,2 @@
+[console_scripts]
+weather-call = weather_call.main:main

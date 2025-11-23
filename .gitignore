@@ -1,0 +1,24 @@
+# 1. Security (Critical)
+.env
+
+# 2. Python Junk (Prevents __pycache__ folders everywhere)
+__pycache__/
+*.pyc
+
+# 3. Virtual Environment
+.venv/
+venv/
+
+# 4. Data & Database
+# Ignore the folder content, but keep the folder itself 
+data/*
+!data/.gitkeep
+
+# Safety net: ignore DB files wherever they appear
+*.db
+*.sqlite3
+
+# 5. IDE Settings 
+# .vscode/
+.idea/
+.DS_Store
