@@ -38,50 +38,50 @@ def main():
         add_new_hourly_data(session, config.api_key)
 
         # reports request in order of the pdf
-        initial_time = datetime.now() - timedelta(hours=24)
+        initial_time = datetime.now() - timedelta(hours=48)
         final_time = datetime.now()
-        # 1. distinct weather conditions in the last 24 hours
+        # 1. distinct weather conditions in the last 48 hours
         distinct_df = distinct_weather(
             initial_time=initial_time, final_time=final_time, session=session
         )
-        logger.info(f"Distinct weather conditions in the last 24 hours:\n{distinct_df}")
+        logger.info(f"Distinct weather conditions in the last 48 hours:\n{distinct_df}")
 
-        # 2. rank the most common weather condition per city in the last 24 hours
+        # 2. rank the most common weather condition per city in the last 48 hours
         most_common_df = rank_common_weather(
             initial_time=initial_time, final_time=final_time, session=session
         )
         logger.info(
-            f"Most common weather condition per city in the last 24 hours:\n{most_common_df}"
+            f"Most common weather condition per city in the last 48 hours:\n{most_common_df}"
         )
 
-        # 3. average temperature per city in the last 24 hours
+        # 3. average temperature per city in the last 48 hours
         average_temp_df = average_temperature(
             initial_time=initial_time, final_time=final_time, session=session
         )
         logger.info(
-            f"Average temperature per city in the last 24 hours:\n{average_temp_df}"
+            f"Average temperature per city in the last 48 hours:\n{average_temp_df}"
         )
 
-        # 4. highest absolute temp city in the last 24 hours
+        # 4. highest absolute temp city in the last 48 hours
         highest_temp_df = city_with_highest_column_value(
             "temperature", initial_time, final_time, session
         )
         logger.info(
-            f"City with highest absolute temperature in the last 24 hours:\n{highest_temp_df}"
+            f"City with highest absolute temperature in the last 48 hours:\n{highest_temp_df}"
         )
 
-        # 5. highest daily temperature variation city in the last 24 hours
+        # 5. highest daily temperature variation city in the last 48 hours
         variation_temp_df = city_with_variation(initial_time, final_time, session)
         logger.info(
-            f"City with highest daily temperature variation in the last 24 hours:\n{variation_temp_df}"
+            f"City with highest daily temperature variation in the last 48 hours:\n{variation_temp_df}"
         )
 
-        # 6. highest wind speed city in the last 24 hours
+        # 6. highest wind speed city in the last 48 hours
         highest_wind_df = city_with_highest_column_value(
             "wind_speed", initial_time, final_time, session
         )
         logger.info(
-            f"City with highest wind speed in the last 24 hours:\n{highest_wind_df}"
+            f"City with highest wind speed in the last 48 hours:\n{highest_wind_df}"
         )
 
 

@@ -42,9 +42,12 @@ def rank_common_weather(
     most_common_df = (
         df_full.filter(pl.col("hourly_timestamp").is_between(initial_time, final_time))
         .group_by(pl.col("name").alias("city"), "weather_condition")
-        .agg(count=pl.count())
+        .agg(frequency=pl.count())
         .with_columns(
-            pl.col("count").rank("dense", descending=True).over("city").alias("rank")
+            pl.col("frequency")
+            .rank("dense", descending=True)
+            .over("city")
+            .alias("rank")
         )
         .filter(pl.col("rank") == 1)
         .drop("rank")
@@ -66,7 +69,7 @@ def average_temperature(
     avg_temp_df = (
         df_full.filter(pl.col("hourly_timestamp").is_between(initial_time, final_time))
         .group_by(pl.col("name").alias("city"))
-        .agg(count=pl.mean("temperature"))
+        .agg(average_temperature=pl.mean("temperature"))
     )
     return avg_temp_df
 
@@ -84,11 +87,8 @@ def city_with_highest_column_value(
 
     highest_attribute_df = (
         df_full.filter(pl.col("hourly_timestamp").is_between(initial_time, final_time))
-        .with_columns(
-            pl.col(column).rank("dense", descending=True).over("name").alias("rank")
-        )
-        .filter(pl.col("rank") == 1)
-        .select(pl.col("name").alias("city"), pl.col(column))
+        .top_k(1, by=pl.col(column).abs())
+        .select(pl.col("name").alias("city"), column)
     )
     return highest_attribute_df
 
@@ -107,17 +107,10 @@ def city_with_variation(
     highest_temp_variation_df = (
         df_full.filter(pl.col("hourly_timestamp").is_between(initial_time, final_time))
         .with_columns(
-            day=pl.col("hourly_timestamp").dt.day(),
+            day=pl.col("hourly_timestamp").dt.date(),
         )
         .group_by(pl.col("name").alias("city"), "day")
         .agg(variation=pl.max("temperature") - pl.min("temperature"))
-        .with_columns(
-            pl.col("variation")
-            .rank("dense", descending=True)
-            .over("city")
-            .alias("rank")
-        )
-        .filter(pl.col("rank") == 1)
-        .drop("rank")
+        .top_k(1, by=pl.col("variation"))
     )
     return highest_temp_variation_df
